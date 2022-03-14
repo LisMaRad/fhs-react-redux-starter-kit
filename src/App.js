@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SignIn } from './components/Form'
 
 function App () {
+  const [user, setUser] = useState({ name: 'sepp' })
   return (
     <div>
-        <SignIn />
+        <SignIn user={user} onUpdateUser={setUser} />
     </div>
   )
 }
