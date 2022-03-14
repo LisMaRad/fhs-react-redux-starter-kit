@@ -33,7 +33,7 @@ export const Table = (idField) => {
                             <div>
                                 <p>{user.amount}$</p>
 
-                                    {user.paid && <Placeholder></Placeholder>}
+                                    {user.paid && <Placeholder>/</Placeholder>}
                                     {!user.paid && <Button>paid</Button>}
 
                             </div>

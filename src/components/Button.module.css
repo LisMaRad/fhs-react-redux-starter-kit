@@ -66,6 +66,13 @@ border: 2px solid black;
   width: 20%;
   border-radius: 0;
   margin: 10px;
-  padding: 15px;
+  padding: 20px;
 }
 
+.placeholder:hover{
+  cursor: default;
+}
+
+.placeholder.button:focus{
+  box-shadow: none;
+}

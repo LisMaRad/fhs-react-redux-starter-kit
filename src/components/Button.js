@@ -29,6 +29,6 @@ export const Button = ({ onClick, children }) => {
 
 export const Placeholder = () => {
   return (
-  <div className={`${styles.button} ${styles.placeholder}`}></div>
+  <button className={`${styles.button} ${styles.placeholder}`}></button>
   )
 }
