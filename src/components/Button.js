@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './Button.module.css'
 
 export const FormButton = ({ onClick, children }) => {
-  console.log(onClick)
   return (
   <button onClick={onClick} className={`${styles.button} ${styles.primary}`}>
     {children}
@@ -10,16 +9,15 @@ export const FormButton = ({ onClick, children }) => {
   )
 }
 
-export const InfoButton = ({ page, children }) => {
+export const InfoLink = ({ href, children }) => {
   return (
-  <a href={page} className={`${styles.button} ${styles.primary} ${styles.info}`}>
+  <a href={href} className={`${styles.button} ${styles.primary} ${styles.info}`}>
     {children}
   </a>
   )
 }
 
 export const Button = ({ onClick, children }) => {
-  console.log(onClick)
   return (
   <button onClick={onClick} className={`${styles.button} ${styles.small}`}>
     {children}

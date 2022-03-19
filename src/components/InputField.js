@@ -3,13 +3,17 @@ import styles from './InputField.module.css'
 
 export const EmailInput = (idField) => {
   return (
-        <input type="text" id={idField} className={`${styles.inputField}`}></input>
+        <label htmlFor="email">Email:
+            <input type="text" id={idField} className={`${styles.inputField}`}></input>
+        </label>
   )
 }
 
 export const PasswordInput = (idField) => {
   return (
-        <input type="password" id={idField} className={`${styles.inputField}`}></input>
+        <label id="password">Password:
+            <input type="password" id={idField} className={`${styles.inputField}`}></input>
+        </label>
   )
 }
 
@@ -21,7 +25,9 @@ export const TextInput = (idField) => {
 
 export const DecimalInput = (idField) => {
   return (
-        <input type="number" id={idField} className={`${styles.inputField} ${styles.decimal}`}></input>
+        <label htmlFor="amount">Amount:
+            <input type="number" id={idField} className={`${styles.inputField} ${styles.decimal}`}></input>
+        </label>
   )
 }
 
@@ -47,6 +53,7 @@ export const DropdownInput = (idField) => {
     }
   ]
   return (
+    <label htmlFor="user">User:
         <select name={idField} id={idField} className={`${styles.inputField}`}>
           <option value="">Select</option>
           {users.map((user) => {
@@ -55,5 +62,7 @@ export const DropdownInput = (idField) => {
             )
           })}
         </select>
+    </label>
+        
   )
 }
