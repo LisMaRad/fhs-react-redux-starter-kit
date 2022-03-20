@@ -1,14 +1,14 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import { SignIn, SignUp } from './components/Form'
 import { MoneyTransaction } from './components/MoneyTransaction'
-import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from "react-router-dom";
-import { Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import styles from './App.module.css'
 
-function App() {
+function App () {
   return (
     <Router>
       <div>
-        <nav>
+        <nav className = {styles.navigation}>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -26,7 +26,7 @@ function App() {
         </nav>
 
         <Routes>
-        <Route path="/" element={<h1>Startpage</h1>}>
+        <Route path="/" element={<h1 className = {styles.headline}>Welcome to Money Transaction!</h1>} >
           </Route>
           <Route exact path="/sign-in" element={<SignIn />}>
           </Route>
@@ -37,7 +37,7 @@ function App() {
         </Routes>
       </div>
     </Router>
-  );
-} 
+  )
+}
 
 export default App
