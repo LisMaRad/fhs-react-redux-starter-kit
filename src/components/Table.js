@@ -1,46 +1,25 @@
 import React from 'react'
 import styles from './Table.module.css'
-import { Button, Placeholder } from './Button'
+import { Button, Placeholder, onMoneyTransactionPaid } from './Button'
 
-export const Table = (idField) => {
-  const users = [
-    {
-      id: 1,
-      name: 'Hansi',
-      amount: 10.45,
-      paid: true
-    },
-    {
-      id: 2,
-      name: 'Heidi',
-      amount: 10.45,
-      paid: false
-    },
-    {
-      id: 3,
-      name: 'Marianne',
-      amount: 10.45,
-      paid: false
-    }
-  ]
+export const Table = ({ idField, data }) => {
   return (
-        <table id={idField} className={`${styles.table}`}>
-            <tbody>
-                {users.map((user) => {
+        <div id={idField} className={`${styles.table}`}>
+                {data.transactions.map((transaction) => {
+                  const user = data.users.find((user) => user.id === transaction.debitorId)
                   return (
-                        <tr key= {user.id} className={`${user.paid && styles.paid}`}>
+                        <div key= {transaction.id} className={`${transaction.paidAt != null && styles.paid} ${styles.tablerow}`}>
                             <p>{user.name}</p>
-                            <div>
-                                <p>{user.amount}$</p>
+                            <div className={styles.amount}>
+                                <p>{transaction.amount}$</p>
 
-                                    {user.paid && <Placeholder>/</Placeholder>}
-                                    {!user.paid && <Button>paid</Button>}
+                                    {transaction.paidAt != null && <Placeholder>/</Placeholder>}
+                                    {transaction.paidAt === null && <Button onClick={() => onMoneyTransactionPaid(data, transaction.id)}>paid</Button>}
 
                             </div>
-                        </tr>
+                        </div>
                   )
                 })}
-            </tbody>
-        </table>
+        </div>
   )
 }

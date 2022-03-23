@@ -3,15 +3,16 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.table tr{
+.tablerow{
     display: flex;
+    flex-direction: row;
     align-items: center;
     border-top: 2px solid black;
     width: 100%;
     justify-content: space-between;
 }
 
-.table tbody tr div{
+.amount{
     display: flex;
     align-items: center;
     text-align: right;
@@ -20,10 +21,10 @@
     width: 50%;
 }
 
-.table tbody tr div Button {
+.amount Button {
     width: 20%;
 }
-.table tbody tr div Placeholder{
+.amount Placeholder{
     width: 20%;
 }
 .table .paid p{

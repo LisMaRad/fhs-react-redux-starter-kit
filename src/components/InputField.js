@@ -1,18 +1,18 @@
 import React from 'react'
 import styles from './InputField.module.css'
 
-export const EmailInput = (idField) => {
+export const EmailInput = ({ name, onChange, value }) => {
   return (
         <label htmlFor="email">Email:
-            <input type="text" id={idField} className={`${styles.inputField}`}></input>
+            <input type="email" id={name} name={name} onChange={onChange} value={value} className={`${styles.inputField}`}></input>
         </label>
   )
 }
 
-export const PasswordInput = (idField) => {
+export const PasswordInput = ({ name, onChange, value }) => {
   return (
         <label id="password">Password:
-            <input type="password" id={idField} className={`${styles.inputField}`}></input>
+            <input type="password" id={name} name={name} onChange={onChange} value={value} className={`${styles.inputField}`}></input>
         </label>
   )
 }
@@ -23,46 +23,25 @@ export const TextInput = (idField) => {
   )
 }
 
-export const DecimalInput = (idField) => {
+export const DecimalInput = ({ name, onChange, value }) => {
   return (
         <label htmlFor="amount">Amount:
-            <input type="number" id={idField} className={`${styles.inputField} ${styles.decimal}`}></input>
+            <input type="number" id={name} name={name} onChange={onChange} value={value} className={`${styles.inputField} ${styles.decimal}`}></input>
         </label>
   )
 }
 
-export const DropdownInput = (idField) => {
-  const users = [
-    {
-      id: 1,
-      name: 'Hansi',
-      amount: 10.45,
-      paid: true
-    },
-    {
-      id: 2,
-      name: 'Heidi',
-      amount: 10.45,
-      paid: false
-    },
-    {
-      id: 3,
-      name: 'Marianne',
-      amount: 10.45,
-      paid: false
-    }
-  ]
+export const DropdownInput = ({ name, onChange, debitorId, data }) => {
   return (
-    <label htmlFor="user">User:
-        <select name={idField} id={idField} className={`${styles.inputField}`}>
+    <label htmlFor={name}>User:
+        <select id={name} name={name} onChange={onChange} debitorid={debitorId} className={`${styles.inputField}`}>
           <option value="">Select</option>
-          {users.map((user) => {
+          {data.map((user) => {
             return (
-              <option key = {user.id} value={`${user.name}`}>{user.name}</option>
+              <option key = {user.id} value={user.id}>{user.name}</option>
             )
           })}
         </select>
     </label>
-        
   )
 }

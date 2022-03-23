@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { EmailInput, PasswordInput, TextInput, DecimalInput, DropdownInput } from './InputField'
 
 storiesOf('InputField', module).add('Email Input', () => (
-    <EmailInput id="newField"></EmailInput>
+    <EmailInput id="newField" name="username"></EmailInput>
 ))
 
 storiesOf('InputField', module).add('Password Input', () => (
@@ -15,7 +15,7 @@ storiesOf('InputField', module).add('Text Input', () => (
 ))
 
 storiesOf('InputField', module).add('Decimal Input', () => (
-    <DecimalInput id="newField"></DecimalInput>
+    <DecimalInput id="newField">Amount</DecimalInput>
 ))
 
 storiesOf('InputField', module).add('Dropdown Input', () => (
