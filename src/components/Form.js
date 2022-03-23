@@ -45,7 +45,7 @@ export const CreateEntry = ({ data }) => {
   return (
     <form className={styles.formHorizontal} onSubmit = {formik.handleSubmit}>
       <div className = {styles.labelInput}>
-      <DropdownInput name="debitorid" onChange={formik.handleChange} debitorid={formik.values.debitorid} data={data.users}></DropdownInput>
+      <DropdownInput name="debitorid" onChange={formik.handleChange} debitorid={formik.values.debitorid} data={data}></DropdownInput>
       </div>
       <div className = {styles.labelInput}>
       <DecimalInput name="amount" onChange={formik.handleChange} value={formik.values.amount}>Amount</DecimalInput>
