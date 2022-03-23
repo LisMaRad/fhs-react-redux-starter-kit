@@ -1,0 +1,31 @@
+.table{
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.table tr{
+    display: flex;
+    align-items: center;
+    border-top: 2px solid black;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.table tbody tr div{
+    display: flex;
+    align-items: center;
+    text-align: right;
+    gap: 2rem;
+    justify-content: right;
+    width: 50%;
+}
+
+.table tbody tr div Button {
+    width: 20%;
+}
+.table tbody tr div Placeholder{
+    width: 20%;
+}
+.table .paid p{
+    text-decoration: line-through;
+}

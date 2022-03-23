@@ -69,7 +69,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-react": "^7.29.2",
-    "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "webpack": "^5.70.0"
   },
