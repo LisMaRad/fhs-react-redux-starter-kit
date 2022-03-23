@@ -7,19 +7,10 @@ import { CreateEntry } from './Form'
 import { Heading, HeadingDisabled } from './Text'
 
 export const MoneyTransaction = () => {
-  // const data = {
-  //   users: [
-  //     { id: 1, name: 'Sepp' },
-  //     { id: 2, name: 'Mike' },
-  //     { id: 3, name: 'Fabian' }
-  //   ],
-  //   transactions: [
-  //     { id: 1, creditorId: 1, debitorId: 2, amount: 10.00, paidAt: null },
-  //     { id: 2, creditorId: 3, debitorId: 1, amount: 11.20, paidAt: '2000-01-01T00:00:00+01+00' }
-  //   ]
-  // }
   const [moneyTransactions, setTransactions] = useState([])
   const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     fetch('http://localhost:3001/users')
       .then((response) => response.json())
@@ -27,11 +18,18 @@ export const MoneyTransaction = () => {
     fetch('http://localhost:3001/money-transaction')
       .then((response) => response.json())
       .then((json) => setTransactions(json))
-  }, [])
+  }, [loading])
 
-  // handleSubmit(debitor, creditor, amount) {
-
-  // }
+  const handleSubmit = (debitor, creditor, amount) => {
+    fetch('http://localhost:3001/money-transaction', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ debitorId: parseInt(debitor), creditorId: creditor, amount: amount, paidAt: null })
+    })
+      .then(
+        setLoading(true)
+      )
+  }
 
   return (
         <div className = {styles.page}>
@@ -40,7 +38,7 @@ export const MoneyTransaction = () => {
                     <Heading>I owe somebody</Heading>
                     <HeadingDisabled>Somebody owes me</HeadingDisabled>
             </div>
-            <CreateEntry data={users}/>
+            <CreateEntry data={users} onSubmit={handleSubmit} />
             <Table users={users} moneyTransactions={moneyTransactions}/>
         </div>
   )
