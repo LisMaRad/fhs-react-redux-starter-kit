@@ -9,7 +9,6 @@ import { Heading, HeadingDisabled } from './Text'
 export const MoneyTransaction = () => {
   const [moneyTransactions, setTransactions] = useState([])
   const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetch('http://localhost:3001/users')
@@ -18,17 +17,17 @@ export const MoneyTransaction = () => {
     fetch('http://localhost:3001/money-transaction')
       .then((response) => response.json())
       .then((json) => setTransactions(json))
-  }, [loading])
+  }, [])
 
-  const handleSubmit = (debitor, creditor, amount) => {
-    fetch('http://localhost:3001/money-transaction', {
+  async function handleSubmit (debitor, creditor, amount) {
+    await fetch('http://localhost:3001/money-transaction', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ debitorId: parseInt(debitor), creditorId: creditor, amount: amount, paidAt: null })
     })
-      .then(
-        setLoading(true)
-      )
+    await fetch('http://localhost:3001/money-transaction')
+      .then((response) => response.json())
+      .then((json) => setTransactions(json))
   }
 
   return (
