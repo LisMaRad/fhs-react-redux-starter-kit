@@ -34,6 +34,13 @@
       "amount": 9,
       "paidAt": null,
       "id": 5
+    },
+    {
+      "debitorId": 8,
+      "creditorId": 5,
+      "amount": 1000,
+      "paidAt": null,
+      "id": 6
     }
   ],
   "users": [

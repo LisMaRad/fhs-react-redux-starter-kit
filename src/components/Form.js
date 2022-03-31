@@ -37,9 +37,9 @@ export const SignUp = () => {
   )
 }
 
-export const CreateEntry = ({ data = [], onSubmit }) => {
+export const CreateEntry = ({ data = [], ownId, onSubmit }) => {
   const formik = useFormik({
-    initialValues: { creditorid: 5, debitorid: 0, amount: 0 },
+    initialValues: { creditorid: ownId, debitorid: 0, amount: 0 },
     onSubmit: values => onSubmit(values.debitorid, values.creditorid, values.amount)
   })
   return (
