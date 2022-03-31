@@ -31,8 +31,8 @@ export const Placeholder = () => {
   )
 }
 
-export function onMoneyTransactionPaid (data, id) {
-  const transaction = data.transactions.find((current) => current.id === id)
+export function onMoneyTransactionPaid (transactions, id) {
+  const transaction = transactions.find((current) => current.id === id)
   transaction.paidAt = new Date().toISOString()
   console.log(id, transaction.paidAt)
 }
