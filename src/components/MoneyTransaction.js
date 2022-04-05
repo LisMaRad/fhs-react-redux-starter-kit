@@ -14,14 +14,6 @@ export const MoneyTransaction = () => {
   const userCollection = collection(db, 'users')
   const transactionCollection = collection(db, 'transactions')
   const [ownId] = useState('2Ntiu0k4W4Df7NeVk792')
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/users')
-  //     .then((response) => response.json())
-  //     .then((json) => setUsers(json))
-  //   fetch('http://localhost:3001/money-transaction')
-  //     .then((response) => response.json())
-  //     .then((json) => setTransactions(json))
-  // }, [])
 
   useEffect(() => { getUsers() }, [])
   useEffect(() => { getTransactions() }, [])
@@ -30,8 +22,13 @@ export const MoneyTransaction = () => {
     const data = await getDocs(userCollection)
     // We generate our own user objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    console.log(parsedData)
-    setUsers(parsedData)
+    // wanted to delete the ownId from array
+    // const me = parsedData.indexOf(ownId)
+    // console.log(me)
+    // parsedData.splice(me, 1)
+    // console.log(parsedData)
+    parsedData.shift()
+    await setUsers(parsedData)
   }
 
   async function getTransactions () {
@@ -39,7 +36,7 @@ export const MoneyTransaction = () => {
     // We generate our own user objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     console.log(parsedData)
-    setTransactions(parsedData)
+    await setTransactions(parsedData)
   }
 
   async function handleSubmit (debitor, creditor, amount) {
@@ -47,17 +44,10 @@ export const MoneyTransaction = () => {
       debitor: debitor,
       creditor: creditor,
       amount: amount,
-      paidAt: 'null'
+      paidAt: null
     })
-
-    // await fetch('http://localhost:3001/money-transaction', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ debitorId: parseInt(debitor), creditorId: creditor, amount: amount, paidAt: null })
-    // })
-    // await fetch('http://localhost:3001/money-transaction')
-    //   .then((response) => response.json())
-    //   .then((json) => setTransactions(json))
+    await getUsers()
+    await getTransactions()
   }
 
   return (
@@ -68,7 +58,7 @@ export const MoneyTransaction = () => {
                     <HeadingDisabled>Somebody owes me</HeadingDisabled>
             </div>
             <CreateEntry data={users} ownId = {ownId} onSubmit={handleSubmit} />
-            <Table users={users} ownId = {ownId} moneyTransactions={moneyTransactions}/>
+            <Table users={users} ownId = {ownId} moneyTransactions={moneyTransactions} getTransactions={getTransactions}/>
         </div>
   )
 }

@@ -50,7 +50,7 @@ export const CreateEntry = ({ data = [], ownId, onSubmit }) => {
       <div className = {styles.labelInput}>
       <DecimalInput name="amount" onChange={formik.handleChange} value={formik.values.amount}>Amount</DecimalInput>
       </div>
-      <button type="submit" className = {styles.button}>Create</button>
+      <button type="submit" className={styles.button}>Create</button>
     </form>
   )
 }
