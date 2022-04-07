@@ -1,5 +1,8 @@
 import React from 'react'
 import styles from './Button.module.css'
+// import { updateDoc } from 'firebase/firestore'
+import { db } from '../firebase-config'
+import { updateDoc, serverTimestamp, doc } from 'firebase/firestore'
 
 export const FormButton = ({ children }) => {
   return (
@@ -31,8 +34,9 @@ export const Placeholder = () => {
   )
 }
 
-export function onMoneyTransactionPaid (transactions, id) {
-  const transaction = transactions.find((current) => current.id === id)
-  transaction.paidAt = new Date().toISOString()
-  console.log(id, transaction.paidAt)
+export async function onMoneyTransactionPaid (id, getTransactions) {
+  await updateDoc(doc(db, 'transactions', id), {
+    paidAt: serverTimestamp()
+  })
+  await getTransactions()
 }

@@ -37,9 +37,9 @@ export const SignUp = () => {
   )
 }
 
-export const CreateEntry = ({ data = [], onSubmit }) => {
+export const CreateEntry = ({ data = [], ownId, onSubmit }) => {
   const formik = useFormik({
-    initialValues: { creditorid: 5, debitorid: 0, amount: 0 },
+    initialValues: { creditorid: ownId, debitorid: 0, amount: 0 },
     onSubmit: values => onSubmit(values.debitorid, values.creditorid, values.amount)
   })
   return (
@@ -50,7 +50,7 @@ export const CreateEntry = ({ data = [], onSubmit }) => {
       <div className = {styles.labelInput}>
       <DecimalInput name="amount" onChange={formik.handleChange} value={formik.values.amount}>Amount</DecimalInput>
       </div>
-      <button type="submit" className = {styles.button}>Create</button>
+      <button type="submit" className={styles.button}>Create</button>
     </form>
   )
 }
