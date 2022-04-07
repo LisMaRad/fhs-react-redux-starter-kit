@@ -1,10 +1,17 @@
-import { React } from 'react'
+import { React, useState, useEffect } from 'react'
 import { SignIn, SignUp } from './components/Form'
 import { MoneyTransaction } from './components/MoneyTransaction'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import styles from './App.module.css'
+import { auth } from './firebase-config'
+import ProtectedRoute from './components/ProtectedRoutes'
 
-function App () {
+const App = () => {
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => setUser(user))
+  }, [])
   return (
     <Router>
       <div>
@@ -28,11 +35,11 @@ function App () {
         <Routes>
         <Route path="/" element={<h1 className = {styles.headline}>Welcome to Money Transaction!</h1>} >
           </Route>
-          <Route exact path="/sign-in" element={<SignIn />}>
+          <Route exact path="/sign-in" element={<SignIn user={user} />}>
           </Route>
-          <Route path="/sign-up" element={<SignUp />}>
+          <Route path="/sign-up" element={<SignUp user={user} />}>
           </Route>
-          <Route path="/money-transaction" element={<MoneyTransaction />}>
+          <Route path="/money-transaction" element={<ProtectedRoute user={user}><MoneyTransaction /* user={user} */ /></ProtectedRoute>}>
           </Route>
         </Routes>
       </div>

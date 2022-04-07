@@ -1,19 +1,19 @@
 import { React, useState, useEffect } from 'react'
 import styles from './MoneyTransaction.module.css'
-import { action } from '@storybook/addon-actions'
-import { Button } from './Button'
+import { Button, logOut } from './Button'
 import { Table } from './Table'
 import { CreateEntry } from './Form'
 import { Heading, HeadingDisabled } from './Text'
 import { db } from '../firebase-config'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 
-export const MoneyTransaction = () => {
+export const MoneyTransaction = ({ user }) => {
   const [moneyTransactions, setTransactions] = useState([])
   const [users, setUsers] = useState([])
   const userCollection = collection(db, 'users')
   const transactionCollection = collection(db, 'transactions')
-  const [ownId] = useState('2Ntiu0k4W4Df7NeVk792')
+  const [ownId] = useState(user.uid)
+  console.log(ownId)
 
   useEffect(() => { getUsers() }, [])
   useEffect(() => { getTransactions() }, [])
@@ -23,11 +23,11 @@ export const MoneyTransaction = () => {
     // We generate our own user objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     // wanted to delete the ownId from array
-    // const me = parsedData.indexOf(ownId)
-    // console.log(me)
-    // parsedData.splice(me, 1)
-    // console.log(parsedData)
-    parsedData.shift()
+    // TODO: pops last element
+    const me = parsedData.indexOf(ownId)
+    console.log(me)
+    parsedData.pop(me)
+    console.log(parsedData)
     await setUsers(parsedData)
   }
 
@@ -52,7 +52,7 @@ export const MoneyTransaction = () => {
 
   return (
         <div className = {styles.page}>
-            <div className = {styles.right}><Button onClick={action('clicked')}>Click me</Button></div>
+            <div className = {styles.right}><Button onClick={logOut}>logout</Button></div>
             <div className = {styles.header}>
                     <Heading>I owe somebody</Heading>
                     <HeadingDisabled>Somebody owes me</HeadingDisabled>

@@ -17,9 +17,11 @@ export const PasswordInput = ({ name, onChange, value }) => {
   )
 }
 
-export const TextInput = (idField) => {
+export const TextInput = ({ name, onChange, value }) => {
   return (
-        <input type="text" id={idField} className={`${styles.inputField}`}></input>
+    <label id="name">Name:
+      <input type="test" id={name} name={name} onChange={onChange} value={value} className={`${styles.inputField}`}></input>
+    </label>
   )
 }
 

@@ -1,20 +1,23 @@
 import React from 'react'
 import styles from './Form.module.css'
-import { DecimalInput, DropdownInput, EmailInput, PasswordInput } from './InputField'
-import { FormButton, InfoLink } from './Button'
+import { DecimalInput, DropdownInput, EmailInput, PasswordInput, TextInput } from './InputField'
+import { FormButton, InfoLink, createNewUser, loginUser } from './Button'
 import { useFormik } from 'formik'
 import { addons, mockChannel } from '@storybook/addons'
+import { Navigate } from 'react-router-dom'
 
 addons.setChannel(mockChannel())
 
-export const SignIn = () => {
+export const SignIn = ({ user }) => {
   const formik = useFormik({
-    initialValues: { username: '', password: '' },
-    onSubmit: values => console.log(values)
+    initialValues: { email: '', password: '' },
+    onSubmit: values => loginUser(values.email, values.password)
   })
+
+  if (user) return <Navigate to='/money-transaction'></Navigate>
   return (
     <form className={styles.form} onSubmit = {formik.handleSubmit}>
-      <EmailInput name="username" onChange={formik.handleChange} value={formik.values.username}></EmailInput>
+      <EmailInput name="email" onChange={formik.handleChange} value={formik.values.email}></EmailInput>
       <PasswordInput name="password" onChange={formik.handleChange} value={formik.values.password}></PasswordInput>
       <FormButton>Sign in</FormButton>
       <InfoLink href="/SignUp">Sign up</InfoLink>
@@ -22,14 +25,16 @@ export const SignIn = () => {
   )
 }
 
-export const SignUp = () => {
+export const SignUp = ({ user }) => {
   const formik = useFormik({
-    initialValues: { username: '', password: '' },
-    onSubmit: values => console.log(values)
+    initialValues: { email: '', password: '', name: '' },
+    onSubmit: values => createNewUser(values.name, values.password, values.email)
   })
+  if (user) return <Navigate to='/money-transaction'></Navigate>
   return (
     <form className={styles.form} onSubmit = {formik.handleSubmit}>
-     <EmailInput name="username" onChange={formik.handleChange} value={formik.values.username}></EmailInput>
+      <TextInput name="name" onChange={formik.handleChange} value={formik.values.name}></TextInput>
+      <EmailInput name="email" onChange={formik.handleChange} value={formik.values.email}></EmailInput>
       <PasswordInput name="password" onChange={formik.handleChange} value={formik.values.password}></PasswordInput>
       <FormButton>Sign up</FormButton>
       <InfoLink href="/SignIn">Sign in</InfoLink>
