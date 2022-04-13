@@ -22,12 +22,14 @@ export const MoneyTransaction = ({ user }) => {
     const data = await getDocs(userCollection)
     // We generate our own user objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    // wanted to delete the ownId from array
-    // TODO: pops last element
-    const me = parsedData.indexOf(ownId)
-    console.log(me)
-    parsedData.pop(me)
-    console.log(parsedData)
+    // to delete the ownId from array
+    // eslint-disable-next-line array-callback-return
+    parsedData.findIndex(function (item, i) {
+      if (item.id === ownId) {
+        delete parsedData[i]
+      }
+    })
+
     await setUsers(parsedData)
   }
 
@@ -40,12 +42,14 @@ export const MoneyTransaction = ({ user }) => {
   }
 
   async function handleSubmit (debitor, creditor, amount) {
-    await addDoc(collection(db, 'transactions'), {
-      debitor: debitor,
-      creditor: creditor,
-      amount: amount,
-      paidAt: null
-    })
+    if (debitor !== creditor) {
+      await addDoc(collection(db, 'transactions'), {
+        debitor: debitor,
+        creditor: creditor,
+        amount: amount,
+        paidAt: null
+      })
+    }
     await getUsers()
     await getTransactions()
   }
