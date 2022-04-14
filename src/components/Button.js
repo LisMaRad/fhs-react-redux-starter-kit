@@ -1,12 +1,14 @@
 import React from 'react'
 import styles from './Button.module.css'
-// import { updateDoc } from 'firebase/firestore'
-import { db } from '../firebase-config'
-import { updateDoc, serverTimestamp, doc } from 'firebase/firestore'
+import { auth, db } from '../firebase-config'
+import { setDoc, updateDoc, serverTimestamp, doc } from 'firebase/firestore'
+// import { useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { Navigate } from 'react-router-dom'
 
-export const FormButton = ({ children }) => {
+export const FormButton = ({ children, handleSubmit }) => {
   return (
-  <button type="submit" className={`${styles.button} ${styles.primary}`}>
+  <button type="submit" className={`${styles.button} ${styles.primary}`} onClick={handleSubmit}>
     {children}
   </button>
   )
@@ -39,4 +41,40 @@ export async function onMoneyTransactionPaid (id, getTransactions) {
     paidAt: serverTimestamp()
   })
   await getTransactions()
+}
+
+// const navigate = useNavigate()
+
+export async function createNewUser (name, password, email) {
+  try {
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
+
+    const uid = userCredentials.user.uid
+    await setDoc(doc(db, 'users', uid), { name: name })
+    // navigate('/money-transaction')
+  } catch (error) {
+    return null
+  }
+}
+
+export async function loginUser (email, password) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password)
+    // navigate('money-transaciton')
+    console.log('funkt')
+  } catch (error) {
+    return null
+  }
+}
+
+export async function logOut ({ user }) {
+  await signOut(auth).then(() => {
+    console.log('signed out')
+  })
+  console.log('ausloggen')
+  if (!user) return <Navigate to='/'></Navigate>
 }

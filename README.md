@@ -21,6 +21,13 @@ npm install
 npm run start
 ```
 
+# Deployment to firebase
+
+```
+npm run build
+firebase deploy
+```
+
 # Available Scripts
 
 ```
