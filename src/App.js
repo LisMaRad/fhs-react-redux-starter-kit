@@ -1,11 +1,18 @@
-import { React, useState, useEffect } from 'react'
-import { SignIn, SignUp } from './components/Form'
-import { MoneyTransaction } from './components/MoneyTransaction'
+import { React, useState, useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import styles from './App.module.css'
 import { auth } from './firebase-config'
 import ProtectedRoute from './components/ProtectedRoutes'
 
+const SignIn = lazy(() => import('./components/Form').then(module => ({
+  default: module.SignIn
+})))
+const SignUp = lazy(() => import('./components/Form').then(module => ({
+  default: module.SignUp
+})))
+const MoneyTransaction = lazy(() => import('./components/MoneyTransaction').then(module => ({
+  default: module.MoneyTransaction
+})))
 const App = () => {
   const [user, setUser] = useState()
 
@@ -32,11 +39,20 @@ const App = () => {
           <Routes>
           <Route path="/" element={<h1 className = {styles.headline}>Welcome to Money Transaction!</h1>} >
             </Route>
-            <Route exact path="/sign-in" element={<SignIn user={user} />}>
+            <Route exact path="/sign-in" element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <SignIn user={user} />
+              </Suspense>}>
             </Route>
-            <Route path="/sign-up" element={<SignUp user={user} />}>
+            <Route exact path="/sign-up" element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <SignUp user={user} />
+              </Suspense>}>
             </Route>
-            <Route path="/money-transaction" element={<ProtectedRoute user={user}><MoneyTransaction /></ProtectedRoute>}>
+            <Route path="/money-transaction" element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <ProtectedRoute user={user}><MoneyTransaction /></ProtectedRoute>
+              </Suspense>}>
             </Route>
           </Routes>
         </div>
@@ -63,7 +79,10 @@ const App = () => {
             </Route>
           <Route path="/sign-up" element={<ProtectedRoute user={user}><SignUp /></ProtectedRoute>}>
             </Route>
-            <Route path="/money-transaction" element={<ProtectedRoute user={user}><MoneyTransaction /* user={user} */ /></ProtectedRoute>}>
+            <Route path="/money-transaction" element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <ProtectedRoute user={user}><MoneyTransaction/></ProtectedRoute>
+              </Suspense>}>
             </Route>
           </Routes>
         </div>
