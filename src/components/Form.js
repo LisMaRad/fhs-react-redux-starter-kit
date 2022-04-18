@@ -8,6 +8,8 @@ import { Navigate } from 'react-router-dom'
 
 addons.setChannel(mockChannel())
 
+const DEFAULT_USERS = []
+
 export const SignIn = ({ user }) => {
   const formik = useFormik({
     initialValues: { email: '', password: '' },
@@ -42,7 +44,7 @@ export const SignUp = ({ user }) => {
   )
 }
 
-export const CreateEntry = ({ data = [], ownId, onSubmit }) => {
+export const CreateEntry = ({ data = DEFAULT_USERS, ownId, onSubmit }) => {
   const formik = useFormik({
     initialValues: { creditorid: ownId, debitorid: 0, amount: 0 },
     onSubmit: values => onSubmit(values.debitorid, values.creditorid, values.amount)

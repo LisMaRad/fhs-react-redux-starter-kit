@@ -65,7 +65,6 @@ export async function loginUser (email, password) {
   try {
     await signInWithEmailAndPassword(auth, email, password)
     // navigate('money-transaciton')
-    console.log('funkt')
   } catch (error) {
     return null
   }
@@ -73,8 +72,6 @@ export async function loginUser (email, password) {
 
 export async function logOut ({ user }) {
   await signOut(auth).then(() => {
-    console.log('signed out')
   })
-  console.log('ausloggen')
   if (!user) return <Navigate to='/'></Navigate>
 }

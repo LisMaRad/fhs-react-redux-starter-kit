@@ -7,13 +7,12 @@ import { Heading, HeadingDisabled } from './Text'
 import { db } from '../firebase-config'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 
-export const MoneyTransaction = ({ user }) => {
+export const MoneyTransaction = ({ user = [] }) => {
   const [moneyTransactions, setTransactions] = useState([])
   const [users, setUsers] = useState([])
   const userCollection = collection(db, 'users')
   const transactionCollection = collection(db, 'transactions')
   const [ownId] = useState(user.uid)
-  console.log(ownId)
 
   useEffect(() => { getUsers() }, [])
   useEffect(() => { getTransactions() }, [])
@@ -30,6 +29,9 @@ export const MoneyTransaction = ({ user }) => {
       }
     })
 
+    // somehow this doesn't work, but we don't really know why
+    // const usersChoosable = useMemo(() => parsedData.map((oneUser) => oneUser.id !== ownId), [user])
+
     await setUsers(parsedData)
   }
 
@@ -37,7 +39,6 @@ export const MoneyTransaction = ({ user }) => {
     const data = await getDocs(transactionCollection)
     // We generate our own user objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    console.log(parsedData)
     await setTransactions(parsedData)
   }
 

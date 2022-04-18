@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useMemo } from 'react'
 import styles from './InputField.module.css'
 
 export const EmailInput = ({ name, onChange, value }) => {
@@ -34,15 +34,16 @@ export const DecimalInput = ({ name, onChange, value }) => {
 }
 
 export const DropdownInput = ({ name, onChange, debitorId, data }) => {
+  const userSelection = useMemo(() => data.map((user) => {
+    return (
+      <option key = {user.id} value={user.id}>{user.name}</option>
+    )
+  }), [data])
   return (
     <label htmlFor={name}>User:
         <select id={name} name={name} onChange={onChange} debitorid={debitorId} className={`${styles.inputField}`}>
           <option value="">Select</option>
-          {data.map((user) => {
-            return (
-              <option key = {user.id} value={user.id}>{user.name}</option>
-            )
-          })}
+          {userSelection}
         </select>
     </label>
   )
